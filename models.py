@@ -18,7 +18,7 @@ DATABASE = SqliteDatabase('communities.sqlite')
 class User(Model):
 	first_name = CharField()
 	last_name = CharField()
-	email = CharField()
+	email = CharField(unique=True)
 	password = CharField()
 
 	# this gives our class instructions on how to connect to a specific database

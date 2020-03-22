@@ -2,6 +2,8 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
+from flask_login import login_user
+from flask_bcrypt import generate_password_hash
 
 
 
@@ -41,16 +43,19 @@ def register():
 			last_name = payload['last_name'],
 			picture = payload['picture'],
 			email = payload['email'],
-			password = payload['password']
+			password = generate_password_hash(payload['password'])
 			)
 	
 
 		# convert mode to dictionary
 		user_dict = model_to_dict(new_user)
+		print(user_dict)
+
+		user_dict.pop('password')
 
 		return jsonify(
 			data=user_dict,
-			message="Succesfully create user",
+			message=f"Succesfully create user with email {user_dict['email']}",
 			status=200
 			), 200
 
