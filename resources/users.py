@@ -61,3 +61,13 @@ def register():
 
 
 
+# login route
+@users.route('/login', methods=['POST'])
+def login():
+
+	payload = request.get_json()
+	print(payload)
+
+	return "You hit the login route"
+
+
