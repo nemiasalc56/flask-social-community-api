@@ -138,9 +138,22 @@ def update(id):
 
 	# look up user with the same id
 	user = models.User.get_by_id(id)
-	print(user)
+	print(user.first_name)
 
-	return "You hit the users update route"
+	user.first_name = payload['first_name'] if 'first_name' in payload else None
+	user.last_name = payload['last_name'] if 'last_name' in payload else None
+	user.picture = payload['picture'] if 'picture' in payload else None
+	user.password = payload['password'] if 'password' in payload else None
+	user.save()
+
+	# convert model to dictionary
+	user_dict = model_to_dict(user)
+
+	return jsonify(
+		data=user_dict,
+		message="Succesfully update user information",
+		status=200
+		), 200
 
 
 
