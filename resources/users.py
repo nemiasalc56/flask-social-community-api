@@ -17,7 +17,23 @@ users = Blueprint('users', 'users')
 @users.route('/', methods=['GET'])
 def index():
 
-	return "You hit the users index route"
+	users = models.User.select()
+	print(users)
+
+	user_dicts = [model_to_dict(user) for user in users]
+	print(user_dicts)
+
+	# remove the password in each user
+	for user in user_dicts:
+		user.pop('password')
+		print(user)
+
+
+	return jsonify(
+		data=user_dicts,
+		message=f"Succesfully retrieved {len(user_dicts)} users.",
+		status=200
+		), 200
 
 
 
@@ -151,11 +167,14 @@ def update(id):
 	user.first_name = payload['first_name'] if 'first_name' in payload else None
 	user.last_name = payload['last_name'] if 'last_name' in payload else None
 	user.picture = payload['picture'] if 'picture' in payload else None
-	user.password = payload['password'] if 'password' in payload else None
+	user.password = generate_password_hash(payload['password'] if 'password' in payload else None)
 	user.save()
 
 	# convert model to dictionary
 	user_dict = model_to_dict(user)
+	print(user_dict)
+
+	user_dict.pop('password')
 
 	return jsonify(
 		data=user_dict,
