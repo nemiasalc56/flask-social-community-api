@@ -2,6 +2,9 @@
 from flask import Flask
 import models
 from resources.users import users
+# this is the main tool for coordinating the login/session
+from flask_login import LoginManager
+
 
 
 
@@ -11,6 +14,18 @@ PORT = 8000
 
 
 app = Flask(__name__)
+
+
+# set up a secret key
+app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
+
+# instantiate LoginManager to a login_manager
+login_manager = LoginManager()
+
+# connect the app to login_manager
+login_manager.init_app(app)
+
+
 
 
 

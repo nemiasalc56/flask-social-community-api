@@ -2,8 +2,8 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
+from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user
-from flask_bcrypt import generate_password_hash
 
 
 
@@ -46,6 +46,8 @@ def register():
 			password = generate_password_hash(payload['password'])
 			)
 	
+		# log user in
+		login_user(new_user)
 
 		# convert mode to dictionary
 		user_dict = model_to_dict(new_user)
@@ -68,6 +70,49 @@ def login():
 	payload = request.get_json()
 	print(payload)
 
-	return "You hit the login route"
+	# convert email to lower case
+	payload['email'] = payload['email'].lower()
+
+	try:
+
+		# look up user by email
+		user = models.User.get(models.User.email == payload['email'])
+		# this should cause an error if the user doesn't exist
+
+		user_dict = model_to_dict(user)
+
+		# check if the password is correct
+		password_is_good = check_password_hash(user_dict['password'], payload['password'])
+		# if the password is good, log user in
+		if password_is_good:
+			# this logs the user and starts a new session
+			login_user(user)
+			print("here")
+
+			# remove the password
+			user_dict.pop('password')
+
+			return jsonify(
+				data=user_dict,
+				message=f"Succesfully logged in user with email {user_dict['email']}",
+				status=200
+				), 200
+
+		# if not, inform the user that the email or password is incorrect
+		else:
+
+			return jsonify(
+				data={},
+				message="The email or password is incorrect",
+				status=401
+				), 401
+	# if we don't find the user
+	except models.DoesNotExist:
+		# inform the user that the email or password is incorrect
+		return jsonify(
+				data={},
+				message="The email or password is incorrect",
+				status=401
+				), 401
 
 

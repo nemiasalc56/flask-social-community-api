@@ -15,7 +15,7 @@ DATABASE = SqliteDatabase('communities.sqlite')
 
 
 # defining our tables
-class User(Model):
+class User(UserMixin, Model):
 	first_name = CharField()
 	last_name = CharField()
 	email = CharField(unique=True)
