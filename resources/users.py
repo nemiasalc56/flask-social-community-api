@@ -3,7 +3,7 @@ import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 
 
@@ -114,5 +114,19 @@ def login():
 				message="The email or password is incorrect",
 				status=401
 				), 401
+
+
+
+# loguot route
+@users.route('/logout', methods=['GET'])
+def logout():
+	# this is to log user out
+	logout_user()
+	return jsonify(
+		data={},
+		message="Succesfully logout.",
+		status=200
+		), 200
+
 
 
