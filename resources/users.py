@@ -13,6 +13,14 @@ from flask_login import login_user, logout_user
 users = Blueprint('users', 'users')
 
 
+# user index route
+@users.route('/', methods=['GET'])
+def index():
+
+	return "You hit the users index route"
+
+
+
 # register create route
 @users.route('/register', methods=['POST'])
 def register():
@@ -154,6 +162,9 @@ def update(id):
 		message="Succesfully update user information",
 		status=200
 		), 200
+
+
+
 
 
 
