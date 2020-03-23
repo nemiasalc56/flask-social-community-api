@@ -183,8 +183,12 @@ def update(id):
 		), 200
 
 
+# delete route
+@users.route('/<id>', methods=['Delete'])
+def delete(id):
+	print(id)
 
-
+	return "You hit the delete route"
 
 
 
