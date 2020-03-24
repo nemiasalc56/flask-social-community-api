@@ -12,6 +12,16 @@ groups = Blueprint('groups', 'groups')
 
 
 
+# GET groups index
+@groups.route('/', methods=['GET'])
+def group_index():
+
+
+	return "You hit the group index route"
+
+
+
+
 # POST create route
 @groups.route('/', methods=['POST'])
 def make_group():
@@ -21,8 +31,7 @@ def make_group():
 
 	group_member = models.Group.create(
 		name = payload['name'],
-		owner_fk = payload['owner_fk'],
-		secondary_user_fk = payload['secondary_user_fk']
+		owner_fk = payload['owner_fk']
 		)
 	
 	# remove user password
@@ -36,4 +45,7 @@ def make_group():
 		message="Successfuly craeted group",
 		status=200
 		), 200
+
+
+
 

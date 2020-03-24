@@ -35,6 +35,9 @@ class Group(Model):
 	secondary_user_fk = CharField()
 
 
+class Member(Model):
+	group_fk = ForeignKeyField(Group, backref='members')
+	member_fk = ForeignKeyField(User, backref='members')
 
 
 class Chat(Model):
