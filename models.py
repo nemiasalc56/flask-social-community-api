@@ -30,7 +30,15 @@ class User(UserMixin, Model):
 class Group(Model):
 	name = CharField()
 	owner_fk = ForeignKeyField(User, backref='groups')
-	secondary_user_fk = CharField() # will change it later for ArrayField()
+
+	class Meta:
+		database = DATABASE
+
+
+# this is our group member
+class Member(Model):
+	group_fk = ForeignKeyField(Group, backref='members')
+	member_fk = ForeignKeyField(User, backref='members')
 
 	class Meta:
 		database = DATABASE
