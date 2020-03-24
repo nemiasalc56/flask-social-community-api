@@ -1,6 +1,7 @@
 # import models and blueprint
 import models
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
+from playhouse.shortcuts import model_to_dict
 
 
 
@@ -11,10 +12,28 @@ groups = Blueprint('groups', 'groups')
 
 
 
-
-
 # POST create route
 @groups.route('/', methods=['POST'])
 def make_group():
+	# get the info from the request
+	payload = request.get_json()
+	print(payload)
 
-	return "You hit the groups create route"
+	group_member = models.Group.create(
+		name = payload['name'],
+		owner_fk = payload['owner_fk'],
+		secondary_user_fk = payload['secondary_user_fk']
+		)
+	
+	# remove user password
+	group_member_dict = model_to_dict(group_member)
+	group_member_dict['owner_fk'].pop('password')
+
+	print(group_member_dict)
+
+	return jsonify(
+		data=group_member_dict,
+		message="Successfuly craeted group",
+		status=200
+		), 200
+
