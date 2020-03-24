@@ -195,7 +195,6 @@ def delete(id):
 	# delete user
 	user_to_delete.delete_instance()
 
-
 	return jsonify(
 		data={},
 		message="Succesfully deleted user account",
