@@ -73,7 +73,7 @@ def make_group():
 
 	new_group = models.Group.create(
 		name = payload['name'],
-		owner_fk = payload['owner_fk']
+		owner_fk = current_user.id
 		)
 	
 	# remove user password
@@ -88,6 +88,15 @@ def make_group():
 		status=200
 		), 200
 
+
+# update route
+@groups.route('/<id>', methods=['PUT'])
+def update_group(id):
+
+	print(id)
+
+
+	return "You hit the group update route"
 
 
 
