@@ -39,8 +39,26 @@ def group_index():
 @groups.route('/<id>', methods=['GET'])
 def get_one_group(id):
 	print(id)
+	try:
+		group = models.Group.get_by_id(id)
+		group_dict = model_to_dict(group)
+		print(group_dict)
 
-	return "You hit the group show route"
+		# remove the owner's password
+		group_dict['owner_fk'].pop('password')
+
+		return jsonify(
+			data=group_dict,
+			message=f"Successfuly found group with the id {id}",
+			status=200
+			), 200
+
+	except models.DoesNotExist:
+		return jsonify(
+			data={},
+			message="You don't have a group with this id",
+			status=401
+			), 401
 
 
 
