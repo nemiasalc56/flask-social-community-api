@@ -68,7 +68,7 @@ class Player(Model):
 # this method will set up the connection to our database
 def initialize():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Group, Chat, Player], safe=True)
+	DATABASE.create_tables([User, Group, Member, Chat, Player], safe=True)
 
 	print("Connected to database and created tables if they weren't already there.")
 
