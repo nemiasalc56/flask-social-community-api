@@ -70,6 +70,7 @@ class Player(Model):
 | HTTP method | URL path | Description|
 | -----------:|:--------:| ----------:|
 | GET | `/groups` | list of groups |
+| GET | `/groups/<id>` | show a group |
 | POST | `/groups` | create a group |
 | PUT | `'/groups/<id>' | update a group |
 | DELETE | `/groups/<id>` | delete a group |

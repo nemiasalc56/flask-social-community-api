@@ -35,6 +35,16 @@ def group_index():
 
 
 
+# GET group show route
+@groups.route('/<id>', methods=['GET'])
+def get_one_group(id):
+	print(id)
+
+	return "You hit the group show route"
+
+
+
+
 
 # POST create route
 @groups.route('/', methods=['POST'])
