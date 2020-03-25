@@ -9,6 +9,17 @@ from flask_login import current_user
 members = Blueprint('members', 'members')
 
 
+
+# member index route
+@members.route('/', methods=['GET'])
+def member_index():
+
+	return "You hit the member index route"
+
+
+
+
+
 # members create route
 @members.route('/', methods=['POST'])
 def add_member():
