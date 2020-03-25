@@ -92,11 +92,27 @@ def make_group():
 # update route
 @groups.route('/<id>', methods=['PUT'])
 def update_group(id):
+	payload = request.get_json()
 
 	print(id)
+	# look up group with the same id
+	group_to_update = models.Group.get_by_id(id)
+
+	# update the information
+	group_to_update.name = payload['name'] if 'name' in payload else None
+	group_to_update.save()
+
+	# convert to dictionary
+	group_dict = model_to_dict(group_to_update)
+	# remove owner's password
+	group_dict['owner_fk'].pop('password')
 
 
-	return "You hit the group update route"
+	return jsonify(
+		data= group_dict,
+		message="Successfuly update group",
+		status=200
+		), 200
 
 
 
