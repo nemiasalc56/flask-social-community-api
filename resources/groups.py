@@ -116,3 +116,11 @@ def update_group(id):
 
 
 
+
+# delete route
+@groups.route('/<id>', methods=['Delete'])
+def delete_group(id):
+
+	print(id)
+
+	return "You hit the group delete route"
