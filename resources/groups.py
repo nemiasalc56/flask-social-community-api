@@ -121,6 +121,18 @@ def update_group(id):
 @groups.route('/<id>', methods=['Delete'])
 def delete_group(id):
 
-	print(id)
+	# look up group to delete
+	group = models.Group.get_by_id(id)
+	print(model_to_dict(group))
 
-	return "You hit the group delete route"
+	group.delete_instance()
+
+
+	return jsonify(
+		data={},
+		message=f"Successfuly deleted group with id {id}",
+		status=200
+		), 200
+
+
+
