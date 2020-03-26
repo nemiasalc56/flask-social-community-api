@@ -61,3 +61,13 @@ def add_member():
 		status=200
 		), 200
 
+
+# members delete route
+@members.route('/<id>', methods=['Delete'])
+def delete(id):
+
+	print(id)
+
+	return "You hit the member delete route"
+
+
