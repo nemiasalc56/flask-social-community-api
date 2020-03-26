@@ -85,6 +85,27 @@ def send_message(group_id):
 def delete(id):
 	print(id)
 
-	return "You hit the message delete route"
+	# look up message to delete
+	message_to_delete = models.Message.get_by_id(id)
+	message_dict = model_to_dict(message_to_delete)
+	# check if the user is the owner of the message
+	if current_user.id == message_dict['owner_fk']['id']:
+		print(message_dict)
+		# delete message
+		message_to_delete.delete_instance()
+
+		return jsonify(
+			data={},
+			message="Succesfully delete message",
+			status=200
+			), 200
+	else:
+		return jsonify(
+			data={},
+			message="You must be the owner to delete this message",
+			status=200
+			), 200
+
+
 
 
