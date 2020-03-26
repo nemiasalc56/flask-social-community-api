@@ -1,8 +1,8 @@
 # import our models
 import models
 from flask import Blueprint, request, jsonify
-from flask_login import current_user
 from playhouse.shortcuts import model_to_dict
+from flask_login import current_user
 
 
 
@@ -15,19 +15,30 @@ messages = Blueprint('messages', 'messages')
 
 
 # message index route
-@messages.route('/', methods=['GET'])
-def message_index():
+@messages.route('/<group_id>', methods=['GET'])
+def message_index(group_id):
+
+	# look up messages with the same group id
+	messages = models.Message.select()
+
+	# convert group id to integer
+	id = int(group_id)
+
+	message_dicts = [model_to_dict(message) for message in messages if message.group_fk.id == id]
+	print(message_dicts)
+
+	# remove the passwords
+	for message in message_dicts:
+		print('\n')
+		message['owner_fk'].pop('password')
+		message['group_fk']['owner_fk'].pop('password')
 
 
-	return "You hit the message index route"
-
-
-
-
-
-
-
-
+	return jsonify(
+		data=message_dicts,
+		messages=f"Succesfully retrieved {len(message_dicts)} messages",
+		status=200
+		), 200
 
 
 
