@@ -15,12 +15,18 @@ members = Blueprint('members', 'members')
 def member_index(group_id):
 
 	id = int(group_id)
-	print(type(id))
+	print(id)
 	# look up member that are in that group
 	members = models.Member.select()
-
-	member_dicts = [model_to_dict(member) for member in members if member.group_fk == id]
+	print(members)
+	member_dicts = [model_to_dict(member) for member in members if member.group_fk.id == id]
 	print(member_dicts)
+
+	# remove the members' password
+	for member in member_dicts:
+		print('\n')
+		member['group_fk']['owner_fk'].pop('password')
+		member['member_fk'].pop('password')
 
 	return jsonify(
 		data=member_dicts,
@@ -66,8 +72,18 @@ def add_member():
 @members.route('/<id>', methods=['Delete'])
 def delete(id):
 
-	print(id)
+	# loop up member with the same id
+	member_to_delete = models.Member.get_by_id(id)
+	print(model_to_dict(member_to_delete))
 
-	return "You hit the member delete route"
+	# delete member
+	member_to_delete.delete_instance()
+
+
+	return jsonify(
+		data={},
+		message=f"Succesfully delete member with id {id}",
+		status=200
+		), 200
 
 
