@@ -11,6 +11,26 @@ from playhouse.shortcuts import model_to_dict
 messages = Blueprint('messages', 'messages')
 
 
+
+
+
+# message index route
+@messages.route('/', methods=['GET'])
+def message_index():
+
+
+	return "You hit the message index route"
+
+
+
+
+
+
+
+
+
+
+
 # create POST route
 @messages.route('/<group_id>', methods=['POST'])
 def send_message(group_id):
