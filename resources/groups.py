@@ -17,21 +17,29 @@ groups = Blueprint('groups', 'groups')
 @groups.route('/', methods=['GET'])
 def group_index():
 
-	# loop up groups that belongs to current logged in user
-	current_user_groups = [model_to_dict(group) for group in current_user.groups]
+	try:
+		# loop up groups that belongs to current logged in user
+		current_user_groups = [model_to_dict(group) for group in current_user.groups]
 
-	# remove user password before returning the information
-	for group in current_user_groups:
-		group['owner_fk'].pop('password')
+		# remove user password before returning the information
+		for group in current_user_groups:
+			group['owner_fk'].pop('password')
 
-	print(current_user_groups)
+		print(current_user_groups)
 
 
-	return jsonify(
-		data=current_user_groups,
-		message=f"Successfuly retrieved {len(current_user_groups)} groups",
-		status=200
-		), 200
+		return jsonify(
+			data=current_user_groups,
+			message=f"Successfuly retrieved {len(current_user_groups)} groups",
+			status=200
+			), 200
+
+	except:
+		return jsonify(
+			data={},
+			message="You don't have groups",
+			status=401
+			), 401
 
 
 

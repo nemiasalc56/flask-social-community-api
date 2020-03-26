@@ -11,10 +11,22 @@ members = Blueprint('members', 'members')
 
 
 # member index route
-@members.route('/', methods=['GET'])
-def member_index():
+@members.route('/<group_id>', methods=['GET'])
+def member_index(group_id):
 
-	return "You hit the member index route"
+	id = int(group_id)
+	print(type(id))
+	# look up member that are in that group
+	members = models.Member.select()
+
+	member_dicts = [model_to_dict(member) for member in members if member.group_fk == id]
+	print(member_dicts)
+
+	return jsonify(
+		data=member_dicts,
+		message=f"Succesfully retrieved {len(member_dicts)} members",
+		status=200
+		), 200
 
 
 
@@ -48,8 +60,4 @@ def add_member():
 		message="Succesfully create member",
 		status=200
 		), 200
-
-
-
-
 
