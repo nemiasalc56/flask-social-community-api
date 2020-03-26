@@ -80,6 +80,11 @@ def send_message(group_id):
 
 
 
+# delete route
+@messages.route('/<id>', methods=['Delete'])
+def delete(id):
+	print(id)
 
+	return "You hit the message delete route"
 
 
