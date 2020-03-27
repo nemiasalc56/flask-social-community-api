@@ -8,6 +8,7 @@ from resources.messages import messages
 from resources.players import players
 # this is the main tool for coordinating the login/session
 from flask_login import LoginManager
+from flask_cors import CORS
 
 
 
@@ -41,6 +42,12 @@ def load_user(user_id):
 	except models.DoesNotExist:
 		return None
 
+
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(groups, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(members, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(messages, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(players, origins=['http://localhost:3000'], supports_credentials=True)
 
 
 

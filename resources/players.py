@@ -15,9 +15,9 @@ def player_index(group_id):
 
 	player = models.Player.select()
 	player_dict = [model_to_dict(video) for video in player if video.group_fk.id == int(group_id)]
-	print(player_dict)
 
-
+	for video in player_dict:
+		video['group_fk']['owner_fk'].pop('password')
 
 	return jsonify(
 		data=player_dict,
@@ -52,3 +52,9 @@ def player(group_id):
 		message="Succefully created video",
 		status=200
 		), 200
+
+
+
+
+
+
