@@ -8,6 +8,17 @@ players = Blueprint('players', 'players')
 
 
 
+# player index route
+@players.route('/<group_id>', methods=['GET'])
+def player_index(group_id):
+	print(group_id)
+
+	return "You hit the player index route"
+
+
+
+
+
 # create route
 @players.route('/<group_id>', methods=['POST'])
 def player(group_id):
