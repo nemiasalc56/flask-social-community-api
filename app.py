@@ -5,6 +5,7 @@ from resources.users import users
 from resources.groups import groups
 from resources.members import members
 from resources.messages import messages
+from resources.players import players
 # this is the main tool for coordinating the login/session
 from flask_login import LoginManager
 
@@ -48,6 +49,7 @@ app.register_blueprint(users, url_prefix='/api/v1/users/')
 app.register_blueprint(groups, url_prefix='/api/v1/groups/')
 app.register_blueprint(members, url_prefix='/api/v1/members/')
 app.register_blueprint(messages, url_prefix='/api/v1/messages/')
+app.register_blueprint(players, url_prefix='/api/v1/players/')
 
 
 
