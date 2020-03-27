@@ -13,7 +13,17 @@ players = Blueprint('players', 'players')
 def player_index(group_id):
 	print(group_id)
 
-	return "You hit the player index route"
+	player = models.Player.select()
+	player_dict = [model_to_dict(video) for video in player if video.group_fk.id == int(group_id)]
+	print(player_dict)
+
+
+
+	return jsonify(
+		data=player_dict,
+		message="Succefully found the video playing.",
+		status=200
+		), 200
 
 
 
