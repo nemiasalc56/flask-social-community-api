@@ -17,6 +17,7 @@ An app the users can chat and create group chat. A user will be able to create a
 * ```$ pip3 install peewee psycopg2```
 * ```$ pip3 freeze > requirements.txt```
 * ```$ pip3 install flask_login flask-bcrypt```
+* ```$ pip3 install flask-socketio```
 
 
 ## Models 

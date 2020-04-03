@@ -43,29 +43,82 @@ def member_index(group_id):
 def add_member():
 
 	payload = request.get_json()
-	print(payload)
+	group_id = int(payload['group_fk'])
+	member_id = int(payload['member_fk'])
 
-	# look up group
-	group = models.Group.get_by_id(payload['group_fk'])
-	print(group)
+	# check if the member is in the group
+	# if it does, infom that member already exist
+	members = models.Member.select()
 
-	# look up member
-	member = models.Member.create(
-		group_fk = payload['group_fk'],
-		member_fk = payload['member_fk']
-		)
+	member_in_group_dicts = [model_to_dict(member) for member in members if member.group_fk.id == group_id]
+	print(len(member_in_group_dicts))
+	# if we don't find a group, we can add the member
+	if len(member_in_group_dicts) == 0:
+		print('heee')
+		# create member
+		member = models.Member.create(
+			group_fk = payload['group_fk'],
+			member_fk = payload['member_fk']
+			)
 
-	member_dict = model_to_dict(member)
-	member_dict['group_fk']['owner_fk'].pop('password')
-	member_dict['member_fk'].pop('password')
-	print(member_dict)
+		member_dict = model_to_dict(member)
+		member_dict['group_fk']['owner_fk'].pop('password')
+		member_dict['member_fk'].pop('password')
+		# print(member_dict)
 
 
-	return jsonify(
-		data=member_dict,
-		message="Succesfully create member",
-		status=200
-		), 200
+		return jsonify(
+			data=member_dict,
+			message="Succesfully create member",
+			status=200
+			), 200
+
+	else:
+
+		member_exist = False
+
+		# check if the user is in the group already
+		for member in member_in_group_dicts:
+			print("printing member")
+			print(type(member["member_fk"]["id"]))
+			print("printing id")
+			print(group_id)
+
+			if member["member_fk"]["id"] == member_id:
+				print(member["member_fk"])
+				member_exist = True
+
+		print(member_exist)
+		if member_exist == True:
+			
+			return jsonify(
+				data={},
+				message="member already exist",
+				status=401
+				), 401
+
+
+		elif member_exist == False:
+
+			# create member
+			member = models.Member.create(
+				group_fk = payload['group_fk'],
+				member_fk = payload['member_fk']
+				)
+
+			member_dict = model_to_dict(member)
+			member_dict['group_fk']['owner_fk'].pop('password')
+			member_dict['member_fk'].pop('password')
+			# print(member_dict)
+
+
+			return jsonify(
+				data=member_dict,
+				message="Succesfully create member",
+				status=200
+				), 200
+
+		
 
 
 # members delete route

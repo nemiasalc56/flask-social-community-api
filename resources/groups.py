@@ -20,7 +20,8 @@ def group_index():
 	try:
 		# loop up groups that belongs to current logged in user
 		current_user_groups = [model_to_dict(group) for group in current_user.groups]
-
+		print("printing groups")
+		print(current_user_groups)
 		# remove user password before returning the information
 		for group in current_user_groups:
 			group['owner_fk'].pop('password')

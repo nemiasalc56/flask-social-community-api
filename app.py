@@ -9,6 +9,7 @@ from resources.players import players
 # this is the main tool for coordinating the login/session
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_socketio import SocketIO
 
 
 
@@ -19,10 +20,13 @@ PORT = 8000
 
 
 app = Flask(__name__)
-
-
 # set up a secret key
 app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
+# add Flask-SocketIO to the Flask application
+socketio = SocketIO(app)
+
+
+
 
 # instantiate LoginManager to a login_manager
 login_manager = LoginManager()
@@ -71,4 +75,5 @@ app.register_blueprint(players, url_prefix='/api/v1/players/')
 
 if __name__ == '__main__':
 	models.initialize()
-	app.run(debug=DEBUG, port=PORT)
+	# app.run(debug=DEBUG, port=PORT)
+	socketio.run(app, debug=DEBUG, port=PORT)
