@@ -18,15 +18,23 @@ groups = Blueprint('groups', 'groups')
 def group_index():
 
 	try:
+
 		# loop up groups that belongs to current logged in user
 		current_user_groups = [model_to_dict(group) for group in current_user.groups]
+		current_user_members = [model_to_dict(member) for member in current_user.members]
+
+		for member in current_user_members:
+			print(member['group_fk'])
+			current_user_groups.append(member['group_fk'])
+
 		print("printing groups")
 		print(current_user_groups)
+
 		# remove user password before returning the information
 		for group in current_user_groups:
 			group['owner_fk'].pop('password')
 
-		print(current_user_groups)
+		# print(current_user_groups)
 
 
 		return jsonify(
