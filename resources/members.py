@@ -15,16 +15,14 @@ members = Blueprint('members', 'members')
 def member_index(group_id):
 
 	id = int(group_id)
-	print(id)
+
 	# look up member that are in that group
 	members = models.Member.select()
-	print(members)
+
 	member_dicts = [model_to_dict(member) for member in members if member.group_fk.id == id]
-	print(member_dicts)
 
 	# remove the members' password
 	for member in member_dicts:
-		print('\n')
 		member['group_fk']['owner_fk'].pop('password')
 		member['member_fk'].pop('password')
 
@@ -51,10 +49,10 @@ def add_member():
 	members = models.Member.select()
 
 	member_in_group_dicts = [model_to_dict(member) for member in members if member.group_fk.id == group_id]
-	print(len(member_in_group_dicts))
+
 	# if we don't find a group, we can add the member
 	if len(member_in_group_dicts) == 0:
-		print('heee')
+
 		# create member
 		member = models.Member.create(
 			group_fk = payload['group_fk'],
@@ -79,16 +77,11 @@ def add_member():
 
 		# check if the user is in the group already
 		for member in member_in_group_dicts:
-			print("printing member")
-			print(type(member["member_fk"]["id"]))
-			print("printing id")
-			print(group_id)
 
 			if member["member_fk"]["id"] == member_id:
-				print(member["member_fk"])
+
 				member_exist = True
 
-		print(member_exist)
 		if member_exist == True:
 			
 			return jsonify(
@@ -127,7 +120,7 @@ def delete(id):
 
 	# loop up member with the same id
 	member_to_delete = models.Member.get_by_id(id)
-	print(model_to_dict(member_to_delete))
+
 
 	# delete member
 	member_to_delete.delete_instance()

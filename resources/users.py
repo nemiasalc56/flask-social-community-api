@@ -18,15 +18,12 @@ users = Blueprint('users', 'users')
 def index():
 
 	users = models.User.select()
-	print(users)
 
 	user_dicts = [model_to_dict(user) for user in users]
-	print(user_dicts)
 
 	# remove the password in each user
 	for user in user_dicts:
 		user.pop('password')
-		print(user)
 
 
 	return jsonify(
@@ -42,7 +39,6 @@ def index():
 def register():
 	# get the info from the request
 	payload = request.get_json()
-	print(payload)
 
 	# make the email lowercase
 	payload['email'] = payload['email'].lower()
@@ -75,7 +71,6 @@ def register():
 
 		# convert mode to dictionary
 		user_dict = model_to_dict(new_user)
-		print(user_dict)
 
 		user_dict.pop('password')
 
@@ -92,7 +87,6 @@ def register():
 def login():
 
 	payload = request.get_json()
-	print(payload)
 
 	# convert email to lower case
 	payload['email'] = payload['email'].lower()
@@ -111,7 +105,6 @@ def login():
 		if password_is_good:
 			# this logs the user and starts a new session
 			login_user(user)
-			print("here")
 
 			# remove the password
 			user_dict.pop('password')
@@ -157,12 +150,11 @@ def logout():
 def update(id):
 	# get the info from the body
 	payload = request.get_json()
-	print(payload)
-	print(id)
+
 
 	# look up user with the same id
 	user = models.User.get_by_id(id)
-	print(user.first_name)
+
 
 	user.first_name = payload['first_name'] if 'first_name' in payload else None
 	user.last_name = payload['last_name'] if 'last_name' in payload else None
@@ -172,7 +164,6 @@ def update(id):
 
 	# convert model to dictionary
 	user_dict = model_to_dict(user)
-	print(user_dict)
 
 	user_dict.pop('password')
 
@@ -186,11 +177,9 @@ def update(id):
 # delete route
 @users.route('/<id>', methods=['Delete'])
 def delete(id):
-	print(id)
 
 	# look up user with the same id
 	user_to_delete = models.User.get_by_id(id)
-	print(user_to_delete)
 
 	# delete user
 	user_to_delete.delete_instance()

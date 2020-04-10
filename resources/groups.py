@@ -24,11 +24,8 @@ def group_index():
 		current_user_members = [model_to_dict(member) for member in current_user.members]
 
 		for member in current_user_members:
-			print(member['group_fk'])
 			current_user_groups.append(member['group_fk'])
 
-		print("printing groups")
-		print(current_user_groups)
 
 		# remove user password before returning the information
 		for group in current_user_groups:
@@ -59,7 +56,6 @@ def get_one_group(id):
 	try:
 		group = models.Group.get_by_id(id)
 		group_dict = model_to_dict(group)
-		print(group_dict)
 
 		# remove the owner's password
 		group_dict['owner_fk'].pop('password')
@@ -86,7 +82,6 @@ def get_one_group(id):
 def make_group():
 	# get the info from the request
 	payload = request.get_json()
-	print(payload)
 
 	new_group = models.Group.create(
 		name = payload['name'],
@@ -97,7 +92,6 @@ def make_group():
 	group_dict = model_to_dict(new_group)
 	group_dict['owner_fk'].pop('password')
 
-	print(group_dict)
 
 	return jsonify(
 		data=group_dict,
@@ -111,7 +105,6 @@ def make_group():
 def update_group(id):
 	payload = request.get_json()
 
-	print(id)
 	# look up group with the same id
 	group_to_update = models.Group.get_by_id(id)
 
@@ -140,7 +133,6 @@ def delete_group(id):
 
 	# look up group to delete
 	group = models.Group.get_by_id(id)
-	print(model_to_dict(group))
 
 	group.delete_instance()
 

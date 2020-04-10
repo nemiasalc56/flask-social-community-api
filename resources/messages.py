@@ -3,6 +3,7 @@ import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
 from flask_login import current_user
+from flask_socketio import SocketIO, send, emit
 
 
 
@@ -25,11 +26,9 @@ def message_index(group_id):
 	id = int(group_id)
 
 	message_dicts = [model_to_dict(message) for message in messages if message.group_fk.id == id]
-	print(message_dicts)
 
 	# remove the passwords
 	for message in message_dicts:
-		print('\n')
 		message['owner_fk'].pop('password')
 		message['group_fk']['owner_fk'].pop('password')
 
@@ -48,8 +47,8 @@ def send_message(group_id):
 
 	# get the message from the request
 	payload = request.get_json()
-	print(payload)
-	print(group_id)
+	# print(payload)
+	# print(group_id)
 
 	if payload['message'] != "":
 		message = models.Message.create(
@@ -64,7 +63,7 @@ def send_message(group_id):
 		# remove user password
 		message_dict['owner_fk'].pop('password')
 		message_dict['group_fk']['owner_fk'].pop('password')
-		print(message_dict)
+		# print(message_dict)
 
 		return jsonify(
 			data=message_dict,
@@ -83,14 +82,13 @@ def send_message(group_id):
 # delete route
 @messages.route('/<id>', methods=['Delete'])
 def delete(id):
-	print(id)
 
 	# look up message to delete
 	message_to_delete = models.Message.get_by_id(id)
 	message_dict = model_to_dict(message_to_delete)
 	# check if the user is the owner of the message
 	if current_user.id == message_dict['owner_fk']['id']:
-		print(message_dict)
+
 		# delete message
 		message_to_delete.delete_instance()
 
