@@ -56,7 +56,7 @@ class Message(Model):
 
 
 
-class Player(Model):
+class Video(Model):
 	name = CharField()
 	group_fk = ForeignKeyField(Group, backref='player')
 
@@ -68,7 +68,7 @@ class Player(Model):
 # this method will set up the connection to our database
 def initialize():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Group, Member, Message, Player], safe=True)
+	DATABASE.create_tables([User, Group, Member, Message, Video], safe=True)
 
 	print("Connected to database and created tables if they weren't already there.")
 

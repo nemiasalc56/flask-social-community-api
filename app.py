@@ -9,7 +9,7 @@ from resources.players import players
 # this is the main tool for coordinating the login/session
 from flask_login import LoginManager
 from flask_cors import CORS
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from flask_socketio import SocketIO, send, emit, join_room, leave_room, close_room
 
 
 
@@ -52,12 +52,6 @@ CORS(members, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(messages, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(players, origins=['http://localhost:3000'], supports_credentials=True)
 
-app.host = 'localhost'
-
-
-
-
-
 
 
 
@@ -69,30 +63,30 @@ app.register_blueprint(messages, url_prefix='/api/v1/messages/')
 app.register_blueprint(players, url_prefix='/api/v1/players/')
 
 
-
+# join a room
 @socketio.on('join')
 def on_join(data):
     room = data['room']
     print('someone joined room: ', room)
     join_room(room)
 
-
+# leave a room
 @socketio.on('leave')
 def on_leave(data):
     room = data['room']
 
     print('someone is leaving room: ', room)
     leave_room(room)
+    close_room(room, namespace=room)
 
+# send message
 @socketio.on('message')
 def handle_message(message):
-    # print('received message: ' + message)
+
     print('printing message')
     print(message)
     send(message, broadcast=True)
     return None
-
-
 
 
 
