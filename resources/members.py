@@ -123,7 +123,7 @@ def delete(id):
 
 
 	# delete member
-	member_to_delete.delete_instance()
+	member_to_delete.delete_instance(recursive=True)
 
 
 	return jsonify(

@@ -158,7 +158,6 @@ def update(id):
 
 	user.first_name = payload['first_name'] if 'first_name' in payload else None
 	user.last_name = payload['last_name'] if 'last_name' in payload else None
-	user.picture = payload['picture'] if 'picture' in payload else None
 	user.password = generate_password_hash(payload['password'] if 'password' in payload else None)
 	user.save()
 
@@ -182,7 +181,7 @@ def delete(id):
 	user_to_delete = models.User.get_by_id(id)
 
 	# delete user
-	user_to_delete.delete_instance()
+	user_to_delete.delete_instance(recursive=True)
 
 	return jsonify(
 		data={},

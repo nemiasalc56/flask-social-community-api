@@ -134,7 +134,7 @@ def delete_group(id):
 	# look up group to delete
 	group = models.Group.get_by_id(id)
 
-	group.delete_instance()
+	group.delete_instance(recursive=True)
 
 
 	return jsonify(

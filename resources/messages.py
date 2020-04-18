@@ -90,7 +90,7 @@ def delete(id):
 	if current_user.id == message_dict['owner_fk']['id']:
 
 		# delete message
-		message_to_delete.delete_instance()
+		message_to_delete.delete_instance(recursive=True)
 
 		return jsonify(
 			data={},

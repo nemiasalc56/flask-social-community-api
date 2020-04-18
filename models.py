@@ -8,7 +8,8 @@ from playhouse.db_url import connect
 
 
 # using sqlite to have a database
-DATABASE = SqliteDatabase('communities.sqlite')
+# this will allow us to use cascading delete
+DATABASE = SqliteDatabase('communities.sqlite', pragmas={'foreign_keys': 1})
 
 
 
@@ -29,7 +30,7 @@ class User(UserMixin, Model):
 
 class Group(Model):
 	name = CharField()
-	owner_fk = ForeignKeyField(User, backref='groups')
+	owner_fk = ForeignKeyField(User, backref='groups', on_delete='CASCADE')
 
 	class Meta:
 		database = DATABASE
@@ -37,8 +38,8 @@ class Group(Model):
 
 # this is our group member
 class Member(Model):
-	group_fk = ForeignKeyField(Group, backref='members')
-	member_fk = ForeignKeyField(User, backref='members')
+	group_fk = ForeignKeyField(Group, backref='members', on_delete='CASCADE')
+	member_fk = ForeignKeyField(User, backref='members', on_delete='CASCADE')
 
 	class Meta:
 		database = DATABASE
@@ -48,7 +49,7 @@ class Member(Model):
 class Message(Model):
 	message = CharField()
 	owner_fk = ForeignKeyField(User, backref='chats')
-	group_fk = ForeignKeyField(Group, backref='chats')
+	group_fk = ForeignKeyField(Group, backref='chats', on_delete='CASCADE')
 	created_at = DateTimeField(default=datetime.datetime.now)
 
 	class Meta:
