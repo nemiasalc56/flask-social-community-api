@@ -62,7 +62,6 @@ def add_member():
 		member_dict = model_to_dict(member)
 		member_dict['group_fk']['owner_fk'].pop('password')
 		member_dict['member_fk'].pop('password')
-		# print(member_dict)
 
 
 		return jsonify(
@@ -102,7 +101,6 @@ def add_member():
 			member_dict = model_to_dict(member)
 			member_dict['group_fk']['owner_fk'].pop('password')
 			member_dict['member_fk'].pop('password')
-			# print(member_dict)
 
 
 			return jsonify(

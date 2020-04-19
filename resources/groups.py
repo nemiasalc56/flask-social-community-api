@@ -31,9 +31,6 @@ def group_index():
 		for group in current_user_groups:
 			group['owner_fk'].pop('password')
 
-		# print(current_user_groups)
-
-
 		return jsonify(
 			data=current_user_groups,
 			message=f"Successfuly retrieved {len(current_user_groups)} groups",
@@ -52,7 +49,7 @@ def group_index():
 # GET group show route
 @groups.route('/<id>', methods=['GET'])
 def get_one_group(id):
-	print(id)
+
 	try:
 		group = models.Group.get_by_id(id)
 		group_dict = model_to_dict(group)

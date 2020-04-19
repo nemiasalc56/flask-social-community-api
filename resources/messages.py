@@ -47,8 +47,6 @@ def send_message(group_id):
 
 	# get the message from the request
 	payload = request.get_json()
-	# print(payload)
-	# print(group_id)
 
 	if payload['message'] != "":
 		message = models.Message.create(
@@ -63,7 +61,6 @@ def send_message(group_id):
 		# remove user password
 		message_dict['owner_fk'].pop('password')
 		message_dict['group_fk']['owner_fk'].pop('password')
-		# print(message_dict)
 
 		return jsonify(
 			data=message_dict,

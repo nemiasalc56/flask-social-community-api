@@ -11,7 +11,6 @@ players = Blueprint('players', 'players')
 # player index route
 @players.route('/<group_id>', methods=['GET'])
 def player_index(group_id):
-	print(group_id)
 
 	player = models.Player.select()
 	player_dict = [model_to_dict(video) for video in player if video.group_fk.id == int(group_id)]
@@ -35,8 +34,6 @@ def player(group_id):
 
 	# get the information from the request
 	payload = request.get_json()
-	print(payload)
-	print(group_id)
 
 	video = models.Player.create(
 		name=payload['name'],
