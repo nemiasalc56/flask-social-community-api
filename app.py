@@ -97,6 +97,7 @@ def handle_message(message):
 if 'ON_HEROKU' in os.environ: 
   print('\non heroku!')
   models.initialize()
+  socketio.run(app, debug=DEBUG, port=PORT)
 
 
 
