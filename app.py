@@ -95,9 +95,9 @@ def handle_message(message):
 # gunicorn instead of by the three lines below, so we want to initialize the
 # tables in that case as well
 if 'ON_HEROKU' in os.environ: 
-  print('\non heroku!')
-  models.initialize()
-  socketio.run(app, debug=DEBUG, port=PORT)
+    print('\non heroku!')
+    models.initialize()
+
 
 
 
