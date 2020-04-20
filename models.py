@@ -1,3 +1,4 @@
+import os
 # import everything from peewee
 from peewee import *
 import datetime
@@ -5,11 +6,17 @@ from flask_login import UserMixin
 from playhouse.db_url import connect
 
 
+if 'ON_HEROKU' in os.environ: # later we will manually add this env var 
+                              # in heroku so we can write this code
+  DATABASE = connect(os.environ.get('DATABASE_URL')) # heroku will add this 
+                                                     # env var for you 
+                                                     # when you provision the
+                                                     # Heroku Postgres Add-on
 
-
-# using sqlite to have a database
-# this will allow us to use cascading delete
-DATABASE = SqliteDatabase('communities.sqlite', pragmas={'foreign_keys': 1})
+else:
+	# using sqlite to have a database
+	# this will allow us to use cascading delete
+	DATABASE = SqliteDatabase('communities.sqlite', pragmas={'foreign_keys': 1})
 
 
 

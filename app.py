@@ -1,3 +1,4 @@
+import os
 # import flask
 from flask import Flask
 import models
@@ -88,6 +89,13 @@ def handle_message(message):
     send(message, broadcast=True)
     return None
 
+
+# ADD THESE THREE LINES -- because in production the app will be run with 
+# gunicorn instead of by the three lines below, so we want to initialize the
+# tables in that case as well
+if 'ON_HEROKU' in os.environ: 
+  print('\non heroku!')
+  models.initialize()
 
 
 
