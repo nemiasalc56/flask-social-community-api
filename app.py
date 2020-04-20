@@ -24,7 +24,7 @@ app = Flask(__name__)
 # set up a secret key
 app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
 # add Flask-SocketIO to the Flask application
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
+socketio = SocketIO(app, cors_allowed_origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'])
 
 
 
@@ -47,11 +47,11 @@ def load_user(user_id):
 		return None
 
 
-CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(groups, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(members, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(messages, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(players, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'], supports_credentials=True)
+CORS(groups, origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'], supports_credentials=True)
+CORS(members, origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'], supports_credentials=True)
+CORS(messages, origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'], supports_credentials=True)
+CORS(players, origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'], supports_credentials=True)
 
 
 
