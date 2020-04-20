@@ -23,8 +23,6 @@ PORT = 8000
 app = Flask(__name__)
 # set up a secret key
 app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
-# add Flask-SocketIO to the Flask application
-socketio = SocketIO(app, cors_allowed_origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'])
 
 
 
@@ -63,6 +61,10 @@ app.register_blueprint(groups, url_prefix='/api/v1/groups/')
 app.register_blueprint(members, url_prefix='/api/v1/members/')
 app.register_blueprint(messages, url_prefix='/api/v1/messages/')
 app.register_blueprint(players, url_prefix='/api/v1/players/')
+
+
+# add Flask-SocketIO to the Flask application
+socketio = SocketIO(app, cors_allowed_origins=['http://localhost:3000', 'https://socialcommunity.herokuapp.com'])
 
 
 # join a room
