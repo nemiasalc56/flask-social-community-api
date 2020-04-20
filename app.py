@@ -28,6 +28,7 @@ socketio = SocketIO(app, cors_allowed_origins=['http://localhost:3000', 'https:/
 
 
 
+
 # instantiate LoginManager to a login_manager
 login_manager = LoginManager()
 
