@@ -24,7 +24,7 @@ app = Flask(__name__)
 # set up a secret key
 app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
 # add Flask-SocketIO to the Flask application
-socketio = SocketIO(app, cors_allowed_origins=['https://socialcommunity.herokuapp.com/', 'http://localhost:3000'])
+socketio = SocketIO(app, cors_allowed_origins=['https://socialcommunity.herokuapp.com', 'http://localhost:3000'])
 
 
 
