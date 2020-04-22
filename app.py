@@ -27,7 +27,6 @@ app.secret_key = "kdkjflseinoirnspp23dk3odkcm9m"
 socketio = SocketIO(app, cors_allowed_origins=['https://socialcommunity.herokuapp.com', 'http://localhost:3000'])
 
 
-
 # instantiate LoginManager to a login_manager
 login_manager = LoginManager()
 
@@ -102,5 +101,4 @@ if 'ON_HEROKU' in os.environ:
 
 if __name__ == '__main__':
 	models.initialize()
-	# app.run(debug=DEBUG, port=PORT)
 	socketio.run(app, debug=DEBUG, port=PORT)
