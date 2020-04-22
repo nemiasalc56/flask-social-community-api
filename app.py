@@ -14,7 +14,6 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room, close_ro
 
 
 
-
 # print the error
 DEBUG = True
 PORT = 8000
