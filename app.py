@@ -28,7 +28,6 @@ socketio = SocketIO(app, cors_allowed_origins=['https://socialcommunity.herokuap
 
 
 
-
 # instantiate LoginManager to a login_manager
 login_manager = LoginManager()
 
