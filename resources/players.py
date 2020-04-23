@@ -10,6 +10,7 @@ players = Blueprint('players', 'players')
 
 # player index route
 @players.route('/<group_id>', methods=['GET'])
+@login_required
 def player_index(group_id):
 
 	player = models.Player.select()
@@ -30,6 +31,7 @@ def player_index(group_id):
 
 # create route
 @players.route('/<group_id>', methods=['POST'])
+@login_required
 def player(group_id):
 
 	# get the information from the request

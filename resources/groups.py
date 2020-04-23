@@ -2,7 +2,7 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 
 
@@ -15,6 +15,8 @@ groups = Blueprint('groups', 'groups')
 
 # GET groups index
 @groups.route('/', methods=['GET'])
+# this is so that only if you are logged in will have access to this route
+@login_required
 def group_index():
 
 	try:
@@ -48,6 +50,7 @@ def group_index():
 
 # GET group show route
 @groups.route('/<id>', methods=['GET'])
+@login_required
 def get_one_group(id):
 
 	try:
@@ -76,6 +79,7 @@ def get_one_group(id):
 
 # POST create route
 @groups.route('/', methods=['POST'])
+@login_required
 def make_group():
 	# get the info from the request
 	payload = request.get_json()
@@ -99,6 +103,7 @@ def make_group():
 
 # update route
 @groups.route('/<id>', methods=['PUT'])
+@login_required
 def update_group(id):
 	payload = request.get_json()
 
@@ -126,6 +131,7 @@ def update_group(id):
 
 # delete route
 @groups.route('/<id>', methods=['Delete'])
+@login_required
 def delete_group(id):
 
 	# look up group to delete

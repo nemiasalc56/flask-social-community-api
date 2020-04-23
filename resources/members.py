@@ -1,7 +1,7 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 
 # the first members is the blueprint name
@@ -12,6 +12,7 @@ members = Blueprint('members', 'members')
 
 # member index route
 @members.route('/<group_id>', methods=['GET'])
+@login_required
 def member_index(group_id):
 
 	id = int(group_id)
@@ -38,6 +39,7 @@ def member_index(group_id):
 
 # members create route
 @members.route('/', methods=['POST'])
+@login_required
 def add_member():
 
 	payload = request.get_json()
@@ -114,6 +116,7 @@ def add_member():
 
 # members delete route
 @members.route('/<id>', methods=['Delete'])
+@login_required
 def delete(id):
 
 	# loop up member with the same id

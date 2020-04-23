@@ -2,7 +2,7 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
-from flask_login import current_user
+from flask_login import current_user, login_required
 from flask_socketio import SocketIO, send, emit
 
 
@@ -17,6 +17,7 @@ messages = Blueprint('messages', 'messages')
 
 # message index route
 @messages.route('/<group_id>', methods=['GET'])
+@login_required
 def message_index(group_id):
 
 	# look up messages with the same group id
@@ -43,6 +44,7 @@ def message_index(group_id):
 
 # create POST route
 @messages.route('/<group_id>', methods=['POST'])
+@login_required
 def send_message(group_id):
 
 	# get the message from the request
@@ -78,6 +80,7 @@ def send_message(group_id):
 
 # delete route
 @messages.route('/<id>', methods=['Delete'])
+@login_required
 def delete(id):
 
 	# look up message to delete
