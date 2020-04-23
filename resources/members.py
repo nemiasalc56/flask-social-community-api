@@ -87,7 +87,7 @@ def add_member():
 				data={},
 				message="member already exist",
 				status=401
-				), 401
+				), 200
 
 
 		elif member_exist == False:

@@ -72,7 +72,7 @@ def send_message(group_id):
 			data={},
 			message="You must type something to create a message",
 			status=401
-			), 401
+			), 200
 
 
 

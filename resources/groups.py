@@ -42,7 +42,7 @@ def group_index():
 			data={},
 			message="You don't have groups",
 			status=401
-			), 401
+			), 200
 
 
 
@@ -68,7 +68,7 @@ def get_one_group(id):
 			data={},
 			message="You don't have a group with this id",
 			status=401
-			), 401
+			), 200
 
 
 

@@ -53,7 +53,7 @@ def register():
 			data={},
 			message=f"A user the the email {payload['email']} already exists",
 			status=401
-			), 401
+			), 200
 
 
 	except models.DoesNotExist:
@@ -122,7 +122,7 @@ def login():
 				data={},
 				message="The email or password is incorrect",
 				status=401
-				), 401
+				), 200
 	# if we don't find the user
 	except models.DoesNotExist:
 		# inform the user that the email or password is incorrect
@@ -130,7 +130,7 @@ def login():
 				data={},
 				message="The email or password is incorrect",
 				status=401
-				), 401
+				), 200
 
 
 
